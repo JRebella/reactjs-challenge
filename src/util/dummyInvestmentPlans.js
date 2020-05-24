@@ -81,6 +81,6 @@ const riskTable = [
   },
 ];
 
-export const fetchRiskTable = function (success) {
-  success(riskTable);
+export const fetchRiskTable = () => {
+  return riskTable;
 };
