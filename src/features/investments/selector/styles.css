@@ -1,0 +1,12 @@
+.selector-container {
+  display: inline-block;
+}
+
+.selector-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.selector-bar {
+  margin-top: 15px;
+}
