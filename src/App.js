@@ -2,7 +2,8 @@ import React from "react";
 import "bootswatch/dist/flatly/bootstrap.min.css";
 import { Container } from "react-bootstrap";
 import "./App.css";
-import Selector from "./features/investments/selector/riskSelector";
+import Selector from "./features/investments/selector/Selector";
+import Visualizer from "./features/investments/visualizer/Visualizer";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       </nav>
       <Container>
         <Selector />
+        <Visualizer />
       </Container>
     </div>
   );
