@@ -1,10 +1,11 @@
 import React from "react";
-import { ToggleButton, ToggleButtonGroup } from "react-bootstrap";
+import { Button, ToggleButton, ToggleButtonGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { actions } from "./selectorSlice";
 import "./styles.css";
 
-const Selector = () => {
+const Selector = ({ history }) => {
   const selectedRisk = useSelector((state) => state.risk.value);
   const dispatch = useDispatch();
   const handleRiskChange = (riskLevel) => {
@@ -46,9 +47,17 @@ const Selector = () => {
             aria-valuemax="100"
           ></div>
         </div>
+        <Button
+          variant="success"
+          onClick={() => {
+            history.push("/customize");
+          }}
+        >
+          Continue to Portfolio Personalization
+        </Button>
       </div>
     </div>
   );
 };
 
-export default Selector;
+export default withRouter(Selector);

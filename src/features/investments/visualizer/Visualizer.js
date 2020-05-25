@@ -1,8 +1,8 @@
-import React, { useState, Fragment } from "react";
+import React, { Fragment, useState } from "react";
+import { Button } from "react-bootstrap";
+import { Doughnut } from "react-chartjs-2";
 import { useSelector } from "react-redux";
 import { fetchRiskTable } from "../../../util/dummyInvestmentPlans";
-import { Doughnut } from "react-chartjs-2";
-import { Button } from "react-bootstrap";
 
 var _ = require("lodash");
 const riskTable = fetchRiskTable();
@@ -16,6 +16,7 @@ const Visualizer = () => {
       {showChart ? (
         <Fragment>
           <Button
+            variant="outline-secondary"
             onClick={() => {
               setShowChart(false);
             }}
@@ -29,6 +30,7 @@ const Visualizer = () => {
       ) : (
         <Fragment>
           <Button
+            variant="outline-secondary"
             onClick={() => {
               setShowChart(true);
             }}
