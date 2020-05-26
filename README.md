@@ -9,3 +9,13 @@ To start the app in development mode first install all the dependencies using
 Then run the "start" script to launch a local server in [http://localhost:3000](http://localhost:3000) which you can open in your browser
 
 ### `yarn start`
+
+This project was made possible thanks to the following libraries:
+
+- [create-react-app redux template](https://github.com/reduxjs/cra-template-redux)
+- [react-bootstrap](https://github.com/react-bootstrap/react-bootstrap)
+- [bootswatch](https://github.com/thomaspark/bootswatch)
+- [chart.js with react wrapper](https://github.com/jerairrest/react-chartjs-2)
+- [lodash](https://github.com/lodash/lodash)
+- [react-router-dom](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-dom)
+- [react-hook-form](https://github.com/react-hook-form/react-hook-form)
