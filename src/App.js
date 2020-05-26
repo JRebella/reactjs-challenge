@@ -23,12 +23,12 @@ function App() {
         </nav>
         <Container>
           <Switch>
-            <Route exact path="/">
+            <Route exact path="/reactjs-challenge/">
               <Selector />
               <hr />
               <Visualizer />
             </Route>
-            <Route path="/customize">
+            <Route path="/reactjs-challenge/customize">
               <Customizer />
             </Route>
           </Switch>

@@ -50,7 +50,7 @@ const Selector = ({ history }) => {
         <Button
           variant="success"
           onClick={() => {
-            history.push("/customize");
+            history.push("/reactjs-challenge/customize");
           }}
         >
           Continue to Portfolio Personalization

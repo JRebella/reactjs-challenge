@@ -58,7 +58,7 @@ const Customizer = ({ history }) => {
         className="mb-3"
         variant="primary"
         onClick={() => {
-          history.push("/");
+          history.push("/reactjs-challenge/");
         }}
       >
         Back to risk selection

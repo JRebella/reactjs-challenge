@@ -1,5 +1,7 @@
 This app was made as a ReactJS challenge by Juan Rebella (https://github.com/JRebella) on May 2020
 
+[Live Demo](https://jrebella.github.io/reactjs-challenge/)
+
 [Video Demonstration](https://youtu.be/PiPSKVUrWXw)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
