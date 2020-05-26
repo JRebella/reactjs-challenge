@@ -33,7 +33,7 @@ const Customizer = ({ history }) => {
   const { register, handleSubmit } = useForm();
   const [results, setResults] = useState(null);
 
-  //Select only the row we need and clean up the data a little
+  //Select only the row we need and clean up the % sign from the data
   const riskData = _.mapKeys(
     _.omit(
       riskTable.find((element) => element.Risk === selectedRisk),
@@ -42,6 +42,7 @@ const Customizer = ({ history }) => {
     (value, key) => key.replace("%", "").trim()
   );
 
+  // Handle form submission and calculate the results
   const onSubmitPortfolio = (data) => {
     const totalMoney = calculateTotalMoney(data);
     const newDistribution = calculateNewDistribution(totalMoney, riskData);
@@ -123,7 +124,7 @@ const Customizer = ({ history }) => {
                     ) : (
                       <div>
                         It appears your portfolio is already balanced according
-                        to your desired risk factor. There's no transactions
+                        to your desired risk factor. There are no transactions
                         needed to be done!
                       </div>
                     )
@@ -187,6 +188,7 @@ const InvestmentFormRow = ({
                 : ""
             }
             readOnly
+            tabIndex={-1}
             value={!isNaN(difference) ? difference : "-"}
           />
         </Col>
@@ -195,6 +197,7 @@ const InvestmentFormRow = ({
           <FormControl
             readOnly
             className="text-info"
+            tabIndex={-1}
             value={!isNaN(newDistribution) ? newDistribution : "-"}
           />
         </Col>
