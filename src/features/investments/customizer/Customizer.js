@@ -15,9 +15,12 @@ import {
 } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { fetchRiskTable } from "../../../util/dummyInvestmentPlans";
-
 var _ = require("lodash");
+
 const riskTable = fetchRiskTable();
+
+// Used to set the tabbing index on the investment portfolio form
+let tabindex = 0;
 
 const Customizer = ({ history }) => {
   const selectedRisk = useSelector((state) => state.risk.value);
@@ -60,11 +63,15 @@ const Customizer = ({ history }) => {
       <Card className="mt-2">
         <Card.Header>Rebalance Your Portfolio</Card.Header>
         <Card.Body>
-          <p className="text-muted">
+          <h6>
+            This tool will help you convert your current investment portfolio
+            into our suggested ideal portfolio. This ideal suggestion is based
+            on your desired risk factor.
+          </h6>
+          <p className="text-muted text-sm">
             Please fill in your current investments in order to calculate the
             needed transfers to adapt to your new portfolio
           </p>
-
           <Row>
             <Col md={9}>
               <Form onSubmit={handleSubmit(onSubmitPortfolio)}>
@@ -95,17 +102,25 @@ const Customizer = ({ history }) => {
               <Card>
                 <Card.Body>
                   {results ? (
-                    results.transfers.map((transfer, index) => {
-                      return (
-                        <div key={index}>
-                          Transfer{" "}
-                          <span className="text-success">
-                            {transfer.amount}$
-                          </span>{" "}
-                          from {transfer.from} to {transfer.to}.
-                        </div>
-                      );
-                    })
+                    results.transfers.length > 0 ? (
+                      results.transfers.map((transfer, index) => {
+                        return (
+                          <div key={index}>
+                            Transfer{" "}
+                            <span className="text-success">
+                              {transfer.amount}$
+                            </span>{" "}
+                            from {transfer.from} to {transfer.to}.
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <div>
+                        It appears your portfolio is already balanced according
+                        to your desired risk factor. There's no transactions
+                        needed to be done!
+                      </div>
+                    )
                   ) : (
                     <div className="text-muted">
                       Please enter your current portfolio and click on the
@@ -184,6 +199,7 @@ const InvestmentFormRow = ({
   newDistribution,
   registerHandler,
 }) => {
+  tabindex++;
   return (
     <FormGroup>
       <Row>
@@ -196,6 +212,7 @@ const InvestmentFormRow = ({
               </InputGroup.Text>
             </InputGroup.Prepend>
             <FormControl
+              tabIndex={tabindex}
               type="number"
               name={name}
               ref={registerHandler}
