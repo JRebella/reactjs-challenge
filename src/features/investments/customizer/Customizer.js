@@ -37,8 +37,9 @@ const Customizer = ({ history }) => {
     const totalMoney = calculateTotalMoney(data);
     const newDistribution = calculateNewDistribution(totalMoney, riskData);
     const difference = calculateDifference(data, newDistribution);
+    const transfers = calculateTransfers(difference);
 
-    setResults({ difference, newDistribution });
+    setResults({ difference, newDistribution, transfers });
   };
 
   return (
@@ -88,7 +89,32 @@ const Customizer = ({ history }) => {
               </Form>
             </Col>
             <Col>
-              <strong>Recommended Transfers</strong>
+              <FormLabel>
+                <strong>Recommended Transfers</strong>
+              </FormLabel>
+              <Card>
+                <Card.Body>
+                  {results ? (
+                    results.transfers.map((transfer, index) => {
+                      return (
+                        <div key={index}>
+                          Transfer{" "}
+                          <span className="text-success">
+                            {transfer.amount}$
+                          </span>{" "}
+                          from {transfer.from} to {transfer.to}.
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div className="text-muted">
+                      Please enter your current portfolio and click on the
+                      button to rebalance in order to see the needed
+                      transactions to adapt your portfolio to an ideal one
+                    </div>
+                  )}
+                </Card.Body>
+              </Card>
             </Col>
           </Row>
         </Card.Body>
@@ -105,10 +131,51 @@ const calculateNewDistribution = (totalMoney, desiredDistribution) => {
 };
 
 const calculateDifference = (data, newDistribution) =>
-  _.mapValues(data, (value, key) => newDistribution[key] - value);
+  _.mapValues(data, (value, key) => +(newDistribution[key] - value).toFixed(2));
 
 const calculateTotalMoney = (data) =>
   Object.keys(data).reduce((total, key) => total + Number(data[key]), 0);
+
+// Will calculate the needed money transfers in between investment sectors in order to adapt users portfolio to the ideal portfolio
+const calculateTransfers = (incomingDifference) => {
+  let difference = _.cloneDeep(incomingDifference); //In order to not modify incoming object and remain pure
+  let transfers = []; // Array in which to store the data that describes the needed transfers in between investments
+  const keys = Object.keys(difference);
+
+  keys.forEach((toFillKey) => {
+    // Must be filled
+    if (difference[toFillKey] > 0) {
+      // Search for others from where to fill in
+      for (let toSubtractKey of keys) {
+        if (difference[toSubtractKey] < 0) {
+          let trasnferAmount = 0;
+          if (difference[toFillKey] + difference[toSubtractKey] >= 0) {
+            // Use all of this investment to fill the other (possibly all the way)
+            trasnferAmount = +difference[toSubtractKey].toFixed(2);
+            difference[toFillKey] += trasnferAmount;
+            difference[toSubtractKey] = 0;
+          } else {
+            trasnferAmount = +difference[toFillKey].toFixed(2);
+            //Only take what's neccesary and leave the rest
+            difference[toSubtractKey] += trasnferAmount;
+            difference[toFillKey] = 0;
+          }
+          transfers.push({
+            from: toSubtractKey,
+            to: toFillKey,
+            amount: Math.abs(trasnferAmount),
+          });
+
+          if (difference[toFillKey] === 0) {
+            // This sector is already filled, no need to keep iterating
+            break;
+          }
+        }
+      }
+    }
+  });
+  return transfers;
+};
 
 const InvestmentFormRow = ({
   withTitle,
